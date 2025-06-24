@@ -25,7 +25,7 @@ const Inicio = () => {
           <span className="nombre">{usuario.nombre}</span>
           <span className="alias">@{usuario.alias}</span>
         </div>
-        <Link to="/opciones" className="menu-btn">☰</Link>
+        <button className="menu-btn">☰</button>
       </header>
 
 
@@ -38,13 +38,14 @@ const Inicio = () => {
   <Link to="/ingresar" className="accion-btn">Ingresar</Link>
   <Link to="/transferir" className="accion-btn">Transferir</Link>
   <Link to="/sacar" className="accion-btn">Sacar</Link>
-  <Link to="/tucvu" className="accion-btn">Tu CVU</Link>
+  <Link to="/cvu" className="accion-btn">Tu CVU</Link>
 </section>
 
       <section className="movimientos-section">
         <div className="mov-header">
           <h3>Últimos movimientos</h3>
-<Link to="/Vertodo" className="ver-todos">Vertodos</Link>        </div>
+          <button className="ver-todos">Ver todos</button>
+        </div>
         <ul>
           {movimientos.map((item, index) => (
             <li key={index}>{item}</li>

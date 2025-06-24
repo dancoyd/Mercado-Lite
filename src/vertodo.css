@@ -1,0 +1,77 @@
+.vertodo-container {
+  position: relative;
+  padding: 2rem;
+  background-color: #f3f6f9;
+  height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+}
+
+.volver-wrapper {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.volver-flecha {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #2f80ed;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.volver-flecha:hover {
+  background-color: #eaf3ff;
+}
+
+.vertodo-titulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+}
+
+.movimientos-lista {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mov-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.mov-descripcion {
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: #333;
+}
+
+.mov-datos {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.mov-monto {
+  font-weight: bold;
+}
+
+.ingreso .mov-monto {
+  color: #2ecc71;
+}
+
+.egreso .mov-monto {
+  color: #e74c3c;
+}
