@@ -96,3 +96,24 @@
   font-size: 0.9rem;
   color: #777;
 }
+.enviar-btn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 12px;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.enviar-btn:hover {
+  background-color: #0063d3;
+}
+
+.enviar-btn:active {
+  background-color: #004fbb;
+}

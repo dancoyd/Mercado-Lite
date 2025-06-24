@@ -1,0 +1,27 @@
+.destino-info {
+  text-align: center;
+  margin: 24px 0;
+  background-color: #f4f4f4;
+  padding: 16px;
+  border-radius: 10px;
+}
+
+.nombre-destino {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.alias-destino {
+  font-size: 16px;
+  color: #555;
+}
+
+.barra-busqueda[type="number"] {
+  -moz-appearance: textfield;
+}
+.barra-busqueda[type="number"]::-webkit-inner-spin-button,
+.barra-busqueda[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

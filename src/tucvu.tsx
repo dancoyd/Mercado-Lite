@@ -2,10 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './tucvu.css';
 
-const Cvu = () => {
+const Tucvu = () => {
   const cvu = '0000003100001234567890';
   const alias = 'dan.billetera.virtual';
-
   const copiarTexto = (texto: string) => {
     navigator.clipboard.writeText(texto);
     alert('¡Copiado al portapapeles!');
@@ -40,4 +39,4 @@ const Cvu = () => {
   );
 };
 
-export default Cvu;
+export default Tucvu;

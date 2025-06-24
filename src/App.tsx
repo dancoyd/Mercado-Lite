@@ -7,6 +7,8 @@ import Sacar from './sacar';
 import Tucvu from './tucvu';
 import Vertodo from './vertodo';
 import Opciones from './opciones';
+import TransferirDestino from './transferirdestino';
+
 
 
 
@@ -23,8 +25,7 @@ function App() {
         <Route path="/tucvu" element={<Tucvu />} />
         <Route path="/vertodo" element={< Vertodo />} />
         <Route path="/opciones" element={<Opciones />} />
-
-
+        <Route path="/transferirdestino" element={<TransferirDestino />} />
         
       </Routes>
     </Router>
