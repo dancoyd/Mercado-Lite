@@ -2,10 +2,9 @@
   position: relative;
   padding: 2rem;
   background-color: #f3f6f9;
-  height: 100vh;
+  min-height: 100vh;
   font-family: 'Segoe UI', sans-serif;
-  max-width: 600px;
-  margin: 0 auto;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -35,6 +34,7 @@
   margin-top: 3.5rem;
   margin-bottom: 1.5rem;
   color: #2c3e50;
+  text-align: center;
 }
 
 .barra-busqueda {
@@ -53,8 +53,31 @@
   box-shadow: 0 0 0 2px rgba(47, 128, 237, 0.2);
 }
 
+.enviar-btn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.enviar-btn:hover {
+  background-color: #0063d3;
+}
+
+.enviar-btn:active {
+  background-color: #004fbb;
+}
+
 .recientes-section {
   width: 100%;
+  margin-top: 2rem;
 }
 
 .recientes-subtitulo {
@@ -96,24 +119,30 @@
   font-size: 0.9rem;
   color: #777;
 }
-.enviar-btn {
-  margin-top: 12px;
-  width: 100%;
-  padding: 12px;
-  background-color: #007aff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
 
-.enviar-btn:hover {
-  background-color: #0063d3;
-}
+/* Mobile responsive */
+@media (max-width: 480px) {
+  .transferir-container {
+    padding: 1.5rem 1rem;
+  }
 
-.enviar-btn:active {
-  background-color: #004fbb;
+  .transferir-titulo {
+    font-size: 1.3rem;
+  }
+
+  .enviar-btn {
+    font-size: 0.95rem;
+  }
+
+  .barra-busqueda {
+    font-size: 0.95rem;
+  }
+
+  .nombre-contacto {
+    font-size: 0.95rem;
+  }
+
+  .alias-contacto {
+    font-size: 0.85rem;
+  }
 }
