@@ -1,0 +1,133 @@
+.perfil-container {
+  position: relative;
+  padding: 2rem;
+  background-color: #f3f6f9;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.volver-wrapper {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.volver-flecha {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #2f80ed;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.volver-flecha:hover {
+  background-color: #eaf3ff;
+}
+
+.perfil-titulo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-top: 3.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.perfil-avatar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.perfil-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+.file-input {
+  margin-top: 0.5rem;
+}
+
+.editar-btn {
+  background-color: #2f80ed;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-bottom: 2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.editar-btn:hover {
+  background-color: #1c66c5;
+}
+
+.perfil-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;               /* 🔄 Remueve el padding lateral innecesario */
+  width: 100%;              /* ✅ Ocupa todo el ancho del contenedor */
+  box-sizing: border-box;   /* 🔒 Evita que el padding rompa el ancho */
+}
+
+.perfil-dato label {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.perfil-dato input,
+.perfil-dato span {
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-sizing: border-box;
+  text-align: center;
+  display: inline-block;
+}
+
+/* 🔧 Ajustes para móviles */
+@media (max-width: 480px) {
+  .perfil-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .perfil-titulo {
+    font-size: 1.5rem;
+  }
+
+  .perfil-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .editar-btn {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .perfil-dato input,
+  .perfil-dato span {
+    font-size: 0.95rem;
+    padding: 0.6rem;
+  }
+}

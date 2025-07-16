@@ -1,0 +1,101 @@
+.contrasena-container {
+  position: relative;
+  padding: 2rem;
+  background-color: #f3f6f9;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.volver-wrapper {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.volver-flecha {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #2f80ed;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.volver-flecha:hover {
+  background-color: #eaf3ff;
+}
+
+.contrasena-titulo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-top: 3.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.contrasena-formulario {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.contrasena-formulario label {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.contrasena-formulario input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.guardar-btn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #2f80ed;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.guardar-btn:hover {
+  background-color: #1c66c5;
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+  .contrasena-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .contrasena-titulo {
+    font-size: 1.4rem;
+  }
+
+  .contrasena-formulario input {
+    font-size: 0.95rem;
+    padding: 0.6rem;
+  }
+
+  .guardar-btn {
+    font-size: 0.95rem;
+  }
+}

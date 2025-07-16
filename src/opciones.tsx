@@ -12,8 +12,8 @@ const Opciones = () => {
       <h2 className="opciones-titulo">Opciones</h2>
 
       <ul className="opciones-lista">
-        <li><button className="opcion-btn">Perfil</button></li>
-        <li><button className="opcion-btn">Configuración</button></li>
+          <Link to="/perfil" className="opcion-btn">Perfil</Link>
+          <Link to="/configuracion" className="opcion-btn">Configuracion</Link>
         <li><button className="opcion-btn">Cerrar sesión</button></li>
       </ul>
     </div>

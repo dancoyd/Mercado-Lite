@@ -1,0 +1,81 @@
+.configuracion-container {
+  position: relative;
+  padding: 2rem;
+  background-color: #f3f6f9;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.volver-wrapper {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.volver-flecha {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #2f80ed;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.volver-flecha:hover {
+  background-color: #eaf3ff;
+}
+
+.configuracion-titulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 3.5rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.configuracion-lista {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.config-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  text-align: left;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.config-btn:hover {
+  background-color: #e8f0ff;
+}
+
+/* Responsivo para móviles */
+@media (max-width: 480px) {
+  .configuracion-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .configuracion-titulo {
+    font-size: 1.3rem;
+  }
+
+  .config-btn {
+    font-size: 0.95rem;
+    padding: 0.9rem;
+  }
+}

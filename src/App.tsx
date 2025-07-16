@@ -8,6 +8,10 @@ import Tucvu from './tucvu';
 import Vertodo from './vertodo';
 import Opciones from './opciones';
 import TransferirDestino from './transferirdestino';
+import Perfil from './perfil';
+import Configuracion from './configuracion';
+import Contrasena from './contrasena';
+
 
 
 
@@ -26,7 +30,10 @@ function App() {
         <Route path="/vertodo" element={< Vertodo />} />
         <Route path="/opciones" element={<Opciones />} />
         <Route path="/transferirdestino" element={<TransferirDestino />} />
-        
+        <Route path="/perfil" element={<Perfil />} />
+        <Route path="/configuracion" element={<Configuracion />} />
+        <Route path="/contrasena" element={<Contrasena />} />
+
       </Routes>
     </Router>
   );
