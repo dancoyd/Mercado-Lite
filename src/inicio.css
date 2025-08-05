@@ -120,3 +120,64 @@
 .accion-btn {
   text-decoration: none;
 }
+.ingresar {
+  background-color: #2f80ed;
+}
+.ingresar:hover {
+  background-color: #2563c9;
+}
+
+.transferir {
+  background-color: #27ae60;
+}
+.transferir:hover {
+  background-color: #1e8449;
+}
+
+.sacar {
+  background-color: #c0392b;
+}
+.sacar:hover {
+  background-color: #922b21;
+}
+
+.cvu {
+  background-color: #8e44ad;
+}
+.cvu:hover {
+  background-color: #6c3483;
+}
+.ver-todos {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background-color: #dbeafe; /* azul claro */
+  color: #1e3a8a;
+  border: 1px solid #93c5fd;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.ver-todos:hover {
+  background-color: #bfdbfe;
+}
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #f39c12; /* naranja */
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.menu-btn:hover {
+  background-color: #e67e22;
+}

@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'; // 👈 Agregás esto
 import './inicio.css';
-import { FaExchangeAlt } from 'react-icons/fa';
-
+import { FaArrowDown, FaArrowUp, FaCreditCard, FaExchangeAlt, FaEye } from 'react-icons/fa';
 
 const Inicio = () => {
   const [saldo, setSaldo] = useState<number | null>(null);
@@ -28,8 +27,9 @@ const Inicio = () => {
           <span className="nombre">{usuario.nombre}</span>
           <span className="alias">@{usuario.alias}</span>
         </div>
-        <Link to="/opciones" className="menu-btn">☰</Link>
-      </header>
+<Link to="/opciones" className="menu-btn">
+  ☰ Menú
+</Link>      </header>
 
 
 
@@ -38,19 +38,27 @@ const Inicio = () => {
         <h1>{saldo !== null ? `$${saldo.toLocaleString()}` : 'Cargando...'}</h1>
       </section>
  <section className="acciones-footer">
-  <Link to="/ingresar" className="accion-btn">Ingresar</Link>
+  <Link to="/ingresar" className="accion-btn ingresar">
+    <FaArrowDown style={{ marginRight: '0.5rem' }} />
+    Ingresar
+  </Link>
   <Link to="/transferir" className="accion-btn transferir">
-  <FaExchangeAlt style={{ marginRight: '0.5rem' }} />
-  Transferir
-</Link>
-  <Link to="/sacar" className="accion-btn">Sacar</Link>
-  <Link to="/tucvu" className="accion-btn">Tu CVU</Link>
+    <FaExchangeAlt style={{ marginRight: '0.5rem' }} />
+    Transferir
+  </Link>
+  <Link to="/tucvu" className="accion-btn cvu">
+    <FaCreditCard style={{ marginRight: '0.5rem' }} />
+    Tu CVU
+  </Link>
 </section>
 
       <section className="movimientos-section">
         <div className="mov-header">
           <h3>Últimos movimientos</h3>
-<Link to="/Vertodo" className="ver-todos">Vertodos</Link>        </div>
+<Link to="/Vertodo" className="ver-todos">
+  <FaEye style={{ marginRight: '0.5rem' }} />
+  Ver todos
+</Link>        </div>
         <ul>
           {movimientos.map((item, index) => (
             <li key={index}>{item}</li>

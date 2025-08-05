@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaUser, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import './opciones.css';
 
 const Opciones = () => {
@@ -9,12 +10,24 @@ const Opciones = () => {
         <Link to="/" className="volver-flecha">←</Link>
       </div>
 
-      <h2 className="opciones-titulo">Opciones</h2>
+      <h2 className="opciones-titulo">Menú</h2>
 
       <ul className="opciones-lista">
-          <Link to="/perfil" className="opcion-btn">Perfil</Link>
-          <Link to="/configuracion" className="opcion-btn">Configuracion</Link>
-          <Link to="/cerrarsesion" className="opcion-btn">Cerrar sesion</Link>
+        <li>
+          <Link to="/perfil" className="opcion-btn">
+            <FaUser className="opcion-icono" /> Perfil
+          </Link>
+        </li>
+        <li>
+          <Link to="/configuracion" className="opcion-btn">
+            <FaCog className="opcion-icono" /> Configuración
+          </Link>
+        </li>
+        <li>
+          <Link to="/cerrarsesion" className="opcion-btn">
+            <FaSignOutAlt className="opcion-icono" />  Cerrar sesión
+          </Link>
+        </li>
       </ul>
     </div>
   );
