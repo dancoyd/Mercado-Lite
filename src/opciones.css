@@ -39,3 +39,9 @@
 .opcion-btn:hover {
   background-color: #e8f0ff;
 }
+.opcion-icono {
+  margin-right: 0.75rem;
+  font-size: 1.2rem;
+  vertical-align: middle;
+  color: #2f80ed;
+}

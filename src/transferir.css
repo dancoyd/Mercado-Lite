@@ -57,7 +57,7 @@
   margin-top: 1rem;
   width: 100%;
   padding: 0.75rem;
-  background-color: #007aff;
+  background-color: #27ae60;
   color: white;
   border: none;
   border-radius: 8px;
@@ -68,11 +68,11 @@
 }
 
 .enviar-btn:hover {
-  background-color: #0063d3;
+  background-color: #1e8449;
 }
 
 .enviar-btn:active {
-  background-color: #004fbb;
+  background-color: #1e8449;
 }
 
 .recientes-section {
@@ -104,7 +104,7 @@
 
 .contacto-link {
   text-decoration: none;
-  color: #2f80ed;
+  color: #2f80ed; 
   display: flex;
   flex-direction: column;
   gap: 0.2rem;

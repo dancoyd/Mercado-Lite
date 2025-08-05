@@ -66,7 +66,7 @@
 }
 
 .copiar-btn {
-  background-color: #2f80ed;
+  background-color: #8e44ad;
   color: white;
   border: none;
   padding: 0.4rem 0.9rem;
@@ -77,5 +77,5 @@
 }
 
 .copiar-btn:hover {
-  background-color: #1d66ca;
+  background-color: #6c3483;
 }

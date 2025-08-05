@@ -83,3 +83,15 @@ width: 100%;
     padding: 0.9rem;
   }
 }
+.config-icon {
+  margin-right: 0.75rem;
+  font-size: 1.2rem;
+  vertical-align: middle;
+  color: #2f80ed;
+}
+
+.icono-volver {
+  font-size: 1.5rem;
+  color: #2f80ed;
+  vertical-align: middle;
+}
