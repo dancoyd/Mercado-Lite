@@ -1,0 +1,93 @@
+.notificaciones-container {
+  position: relative;
+  padding: 2rem;
+  background-color: #f3f6f9;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* 💡 Ahora fluye y se estira con la pantalla */
+.notificaciones-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 1rem;
+}
+
+.notificaciones-titulo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  margin-top: 3.5rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+/* 🧩 Este bloque se expande como todos los botones anteriores */
+.noti-item {
+  width: 100%;
+  font-size: 1rem;
+  color: #333;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* Checkbox estilizado */
+input[type="checkbox"] {
+  accent-color: #2f80ed;
+  width: 18px;
+  height: 18px;
+}
+
+/* 🔙 Botón volver */
+.volver-wrapper {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.volver-flecha {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #2f80ed;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.volver-flecha:hover {
+  background-color: #eaf3ff;
+}
+
+/* 📱 Responsive */
+@media (max-width: 480px) {
+  .notificaciones-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .notificaciones-titulo {
+    font-size: 1.4rem;
+  }
+
+  .noti-item {
+    font-size: 0.95rem;
+    padding: 0.9rem;
+  }
+
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+}

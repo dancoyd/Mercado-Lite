@@ -11,6 +11,9 @@ import TransferirDestino from './transferirdestino';
 import Perfil from './perfil';
 import Configuracion from './configuracion';
 import Contrasena from './contrasena';
+import Cerrarsesion from './cerrarsesion';
+import Notificaciones from './notificaciones';
+
 
 
 
@@ -33,6 +36,9 @@ function App() {
         <Route path="/perfil" element={<Perfil />} />
         <Route path="/configuracion" element={<Configuracion />} />
         <Route path="/contrasena" element={<Contrasena />} />
+        <Route path="/cerrarsesion" element={<Cerrarsesion />} />
+        <Route path="/notificaciones" element={<Notificaciones />} />
+
 
       </Routes>
     </Router>

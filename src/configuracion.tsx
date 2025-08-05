@@ -13,7 +13,7 @@ const Configuracion = () => {
 
       <ul className="configuracion-lista">
         <Link to="/contrasena" className="config-btn">Contrasena</Link>
-        <li><button className="config-btn">Notificaciones</button></li>
+        <Link to="/notificaciones" className="config-btn">Notificaciones</Link>
         <li><button className="config-btn">Tema</button></li>
       </ul>
     </div>

@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'; // 👈 Agregás esto
 import './inicio.css';
+import { FaExchangeAlt } from 'react-icons/fa';
+
 
 const Inicio = () => {
   const [saldo, setSaldo] = useState<number | null>(null);
@@ -37,7 +39,10 @@ const Inicio = () => {
       </section>
  <section className="acciones-footer">
   <Link to="/ingresar" className="accion-btn">Ingresar</Link>
-  <Link to="/transferir" className="accion-btn">Transferir</Link>
+  <Link to="/transferir" className="accion-btn transferir">
+  <FaExchangeAlt style={{ marginRight: '0.5rem' }} />
+  Transferir
+</Link>
   <Link to="/sacar" className="accion-btn">Sacar</Link>
   <Link to="/tucvu" className="accion-btn">Tu CVU</Link>
 </section>

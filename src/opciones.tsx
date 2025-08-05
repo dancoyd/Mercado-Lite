@@ -14,7 +14,7 @@ const Opciones = () => {
       <ul className="opciones-lista">
           <Link to="/perfil" className="opcion-btn">Perfil</Link>
           <Link to="/configuracion" className="opcion-btn">Configuracion</Link>
-        <li><button className="opcion-btn">Cerrar sesión</button></li>
+          <Link to="/cerrarsesion" className="opcion-btn">Cerrar sesion</Link>
       </ul>
     </div>
   );
