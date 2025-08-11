@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config(); // Carga las variables del archivo .env al entorno
+
 import { Pool } from 'pg';
 
 console.log('Archivo api/hora.js cargado');
