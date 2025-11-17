@@ -6,10 +6,7 @@ const Cerrarsesion = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // 🔧 Aquí se puede limpiar el estado, tokens, sesión, etc.
-    // localStorage.removeItem('token');
-    // setUser(null);
-    // ✅ Redirigir a login o home
+    localStorage.removeItem('token');
     navigate('/');
   };
 

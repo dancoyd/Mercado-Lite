@@ -1,13 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './perfil.css';
 
 const Perfil = () => {
-  const [nombre, setNombre] = useState('Dan');
-  const [apellido, setApellido] = useState('ApellidoEjemplo');
-  const [email, setEmail] = useState('dan@ejemplo.com');
+  const [nombreCompleto, setNombreCompleto] = useState('');
+  const [email, setEmail] = useState('');
   const [avatar, setAvatar] = useState<string | null>(null);
   const [modoEdicion, setModoEdicion] = useState(false);
+
+  useEffect(() => {
+    const fetchPerfil = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('No hay token guardado');
+          return;
+        }
+
+        const res = await fetch('http://localhost:3000/user/saldo', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          console.error('Error en fetch:', res.status, res.statusText);
+          return;
+        }
+
+        const data = await res.json();
+        console.log('Perfil fetch data:', data);
+
+        setNombreCompleto(data.nombre || '');
+        setEmail(data.email || '');
+      } catch (err) {
+        console.error('Error al cargar perfil:', err);
+      }
+    };
+
+    fetchPerfil();
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -35,7 +68,12 @@ const Perfil = () => {
           className="perfil-avatar"
         />
         {modoEdicion && (
-          <input type="file" accept="image/*" onChange={handleImageChange} className="file-input" />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="file-input"
+          />
         )}
       </div>
 
@@ -45,29 +83,28 @@ const Perfil = () => {
 
       <div className="perfil-datos">
         <div className="perfil-dato">
-          <label>Nombre</label>
+          <label>Nombre completo</label>
           {modoEdicion ? (
-            <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+            <input
+              type="text"
+              value={nombreCompleto}
+              onChange={(e) => setNombreCompleto(e.target.value)}
+            />
           ) : (
-            <span>{nombre}</span>
-          )}
-        </div>
-
-        <div className="perfil-dato">
-          <label>Apellido</label>
-          {modoEdicion ? (
-            <input type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} />
-          ) : (
-            <span>{apellido}</span>
+            <span>{nombreCompleto || 'Cargando...'}</span>
           )}
         </div>
 
         <div className="perfil-dato">
           <label>Email</label>
           {modoEdicion ? (
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           ) : (
-            <span>{email}</span>
+            <span>{email || 'Cargando...'}</span>
           )}
         </div>
       </div>

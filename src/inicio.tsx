@@ -1,72 +1,181 @@
-// src/pages/Home.tsx
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion'; // 👈 Agregás esto
+import { FaArrowDown, FaCreditCard, FaExchangeAlt, FaEye } from 'react-icons/fa';
 import './inicio.css';
-import { FaArrowDown, FaArrowUp, FaCreditCard, FaExchangeAlt, FaEye } from 'react-icons/fa';
+
+interface Usuario {
+  nombre: string;
+}
 
 const Inicio = () => {
   const [saldo, setSaldo] = useState<number | null>(null);
   const [movimientos, setMovimientos] = useState<string[]>([]);
-  const [usuario, setUsuario] = useState({
-    nombre: 'Juan Pérez',
-    alias: 'juan.p.billetera'
-  });
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    // Simulación: estos valores eventualmente vendrán del backend
-    setSaldo(25000); // ejemplo
-    setMovimientos(['Pago en MercadoLibre', 'Transferencia recibida', 'Recarga desde tarjeta']);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setCargando(false);
+      return;
+    }
+
+    const fetchDatosUsuario = async () => {
+      try {
+        // Obtener saldo y datos del usuario
+        const resSaldo = await fetch('http://localhost:3000/user/saldo', {
+          method: 'GET',
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}` 
+          }
+        });
+
+        if (!resSaldo.ok) throw new Error('Error al obtener datos del usuario');
+
+        const dataSaldo = await resSaldo.json();
+        setUsuario({ nombre: dataSaldo.nombre });
+        setSaldo(dataSaldo.saldo);
+
+        // Obtener historial de transferencias
+        const resHist = await fetch('http://localhost:3000/historial/historial', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!resHist.ok) throw new Error('Error al obtener historial');
+
+        const dataHist = await resHist.json();
+
+        // Tomar las últimas 5 transferencias y mapear a texto
+        const ultimas5 = dataHist.historial
+          .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
+          .slice(0, 5)
+          .map((h: any) => {
+            if (h.tipo === 'enviada') {
+              return `Transferencia hecha a "${h.receptor.alias}"`;
+            } else {
+              return `Transferencia recibida de "${h.emisor.alias}"`;
+            }
+          });
+
+        setMovimientos(ultimas5);
+
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    fetchDatosUsuario();
   }, []);
+
+  if (cargando) return <div>Cargando...</div>;
 
   return (
     <div className="inicio-container">
-       <header className="top-header">
-        <div className="user-info">
-          <span className="nombre">{usuario.nombre}</span>
-          <span className="alias">@{usuario.alias}</span>
-        </div>
-<Link to="/opciones" className="menu-btn">
-  ☰ Menú
-</Link>      </header>
+      <header className="top-header">
+        {usuario ? (
+          <div className="user-info">
+            <span className="nombre">{usuario.nombre}</span>
+          </div>
+        ) : (
+          <div
+            className="no-session-menu"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'flex-start', 
+              alignItems: 'center',
+              height: '70vh',
+              gap: '2rem',
+              marginTop: '15vh', 
+              width: '100%'
+            }}
+          >
+            <Link
+              to="/login"
+              className="accion-btn iniciar-sesion"
+              style={{
+                padding: '0.5rem 4rem', 
+                fontSize: '2rem',
+                width: '300px',
+                textAlign: 'center',
+                borderRadius: '12px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              Iniciar sesión
+            </Link>
+            <Link
+              to="/registro"
+              className="accion-btn registrarse"
+              style={{
+                padding: '0.5rem 4rem',
+                fontSize: '2rem',
+                width: '300px',
+                textAlign: 'center',
+                borderRadius: '12px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              Registrarse
+            </Link>
+          </div>
+        )}
 
+        {usuario && <Link to="/opciones" className="menu-btn">☰ Menú</Link>}
+      </header>
 
+      {usuario && (
+        <>
+          <section className="saldo-section">
+            <p>Saldo disponible</p>
+            <h1>{saldo !== null ? `$${saldo.toLocaleString()}` : 'Cargando...'}</h1>
+          </section>
 
-      <section className="saldo-section">
-        <p>Saldo disponible</p>
-        <h1>{saldo !== null ? `$${saldo.toLocaleString()}` : 'Cargando...'}</h1>
-      </section>
- <section className="acciones-footer">
-  <Link to="/ingresar" className="accion-btn ingresar">
-    <FaArrowDown style={{ marginRight: '0.5rem' }} />
-    Ingresar
-  </Link>
-  <Link to="/transferir" className="accion-btn transferir">
-    <FaExchangeAlt style={{ marginRight: '0.5rem' }} />
-    Transferir
-  </Link>
-  <Link to="/tucvu" className="accion-btn cvu">
-    <FaCreditCard style={{ marginRight: '0.5rem' }} />
-    Tu CVU
-  </Link>
-</section>
+          <section className="acciones-footer">
+            <Link to="/ingresar" className="accion-btn ingresar">
+              <FaArrowDown style={{ marginRight: '0.5rem' }} />
+              Ingresar
+            </Link>
+            <Link to="/transferir" className="accion-btn transferir">
+              <FaExchangeAlt style={{ marginRight: '0.5rem' }} />
+              Transferir
+            </Link>
+            <Link to="/tucvu" className="accion-btn cvu">
+              <FaCreditCard style={{ marginRight: '0.5rem' }} />
+              Tu CVU
+            </Link>
+          </section>
 
-      <section className="movimientos-section">
-        <div className="mov-header">
-          <h3>Últimos movimientos</h3>
-<Link to="/Vertodo" className="ver-todos">
-  <FaEye style={{ marginRight: '0.5rem' }} />
-  Ver todos
-</Link>        </div>
-        <ul>
-          {movimientos.map((item, index) => (
-            <li key={index}>{item}</li>
-          ))}
-        </ul>
-      </section>
-
-     
+          <section className="movimientos-section">
+            <div className="mov-header">
+              <h3>Últimos movimientos</h3>
+              <Link to="/vertodo" className="ver-todos">
+                <FaEye style={{ marginRight: '0.5rem' }} />
+                Ver todos
+              </Link>
+            </div>
+            <ul>
+              {movimientos.length > 0 ? (
+                movimientos.map((item, index) => <li key={index}>{item}</li>)
+              ) : (
+                <li>No hay movimientos</li>
+              )}
+            </ul>
+          </section>
+        </>
+      )}
     </div>
   );
 };

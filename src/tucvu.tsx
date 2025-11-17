@@ -1,14 +1,49 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './tucvu.css';
 
 const Tucvu = () => {
-  const cvu = '0000003100001234567890';
-  const alias = 'dan.billetera.virtual';
+  const [cvu, setCvu] = useState('Cargando...');
+  const [alias, setAlias] = useState('Cargando...');
+
   const copiarTexto = (texto: string) => {
     navigator.clipboard.writeText(texto);
     alert('¡Copiado al portapapeles!');
   };
+
+  useEffect(() => {
+    const fetchSaldo = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('No hay token guardado');
+          return;
+        }
+
+        const res = await fetch('http://localhost:3000/user/saldo', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          console.error('Error en fetch:', res.status, res.statusText);
+          return;
+        }
+
+        const data = await res.json();
+        console.log('Datos saldo:', data);
+
+        setCvu(data.cbu || 'No disponible');
+        setAlias(data.alias || 'No disponible');
+      } catch (err) {
+        console.error('Error al cargar CVU y alias:', err);
+      }
+    };
+
+    fetchSaldo();
+  }, []);
 
   return (
     <div className="cvu-container">

@@ -1,27 +1,83 @@
+.transferir-container {
+  position: relative;
+  padding: 2rem;
+  background-color: #f3f6f9;
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.volver-wrapper {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+}
+
+.volver-flecha {
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #2f80ed;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.volver-flecha:hover {
+  background-color: #eaf3ff;
+}
+
+.transferir-titulo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 3.5rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
 .destino-info {
   text-align: center;
   margin: 24px 0;
-  background-color: #f4f4f4;
-  padding: 16px;
-  border-radius: 10px;
-}
-
-.nombre-destino {
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 4px;
 }
 
 .alias-destino {
-  font-size: 16px;
-  color: #555;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #000;
 }
 
-.barra-busqueda[type="number"] {
-  -moz-appearance: textfield;
+.barra-busqueda {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+  box-sizing: border-box;
 }
-.barra-busqueda[type="number"]::-webkit-inner-spin-button,
-.barra-busqueda[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+
+.barra-busqueda:focus {
+  border-color: #2f80ed;
+  box-shadow: 0 0 0 2px rgba(47, 128, 237, 0.2);
+}
+
+.enviar-btn {
+  margin-top: 1rem;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.enviar-btn:hover {
+  background-color: #1e8449;
 }

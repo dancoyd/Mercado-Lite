@@ -1,14 +1,75 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './vertodo.css';
 
+interface Movimiento {
+  descripcion: string;
+  monto: number;
+  fecha: string;
+}
+
 const Vertodo = () => {
-  const movimientos = [
-    { descripcion: 'Transferencia a Ana López', monto: -2500, fecha: '24/06/2025' },
-    { descripcion: 'Ingreso con tarjeta', monto: 10000, fecha: '23/06/2025' },
-    { descripcion: 'Pago en MercadoLibre', monto: -3200, fecha: '22/06/2025' },
-    { descripcion: 'Recarga desde cuenta', monto: 5000, fecha: '21/06/2025' },
-  ];
+  const [movimientos, setMovimientos] = useState<Movimiento[]>([]);
+  const [cargando, setCargando] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      setCargando(false);
+      return;
+    }
+
+    const fetchHistorial = async () => {
+      try {
+        const res = await fetch('http://localhost:3000/historial/historial', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!res.ok) throw new Error('Error al obtener historial');
+
+        const data = await res.json();
+
+        // Mapear a formato requerido (solo fecha)
+        const historialFormateado = data.historial
+          .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
+          .map((h: any) => {
+            const fecha = new Date(h.fecha);
+            const fechaFormateada = `${fecha.getDate().toString().padStart(2, '0')}/${
+              (fecha.getMonth() + 1).toString().padStart(2, '0')
+            }/${fecha.getFullYear()}`;
+
+            if (h.tipo === 'enviada') {
+              return {
+                descripcion: `Transferencia hecha a "${h.receptor.alias}"`,
+                monto: -h.monto,
+                fecha: fechaFormateada
+              };
+            } else {
+              return {
+                descripcion: `Transferencia recibida de "${h.emisor.alias}"`,
+                monto: h.monto,
+                fecha: fechaFormateada
+              };
+            }
+          });
+
+        setMovimientos(historialFormateado);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    fetchHistorial();
+  }, []);
+
+  if (cargando) return <div>Cargando...</div>;
 
   return (
     <div className="vertodo-container">
@@ -19,15 +80,21 @@ const Vertodo = () => {
       <h2 className="vertodo-titulo">Todos los movimientos</h2>
 
       <ul className="movimientos-lista">
-        {movimientos.map((item, index) => (
-          <li key={index} className={`mov-item ${item.monto < 0 ? 'egreso' : 'ingreso'}`}>
-            <div className="mov-descripcion">{item.descripcion}</div>
-            <div className="mov-datos">
-              <span className="mov-monto">{item.monto < 0 ? '-' : '+'}${Math.abs(item.monto).toLocaleString()}</span>
-              <span className="mov-fecha">{item.fecha}</span>
-            </div>
-          </li>
-        ))}
+        {movimientos.length > 0 ? (
+          movimientos.map((item, index) => (
+            <li key={index} className={`mov-item ${item.monto < 0 ? 'egreso' : 'ingreso'}`}>
+              <div className="mov-descripcion">{item.descripcion}</div>
+              <div className="mov-datos">
+                <span className="mov-monto">
+                  {item.monto < 0 ? '-' : '+'}${Math.abs(item.monto).toLocaleString()}
+                </span>
+                <span className="mov-fecha">{item.fecha}</span>
+              </div>
+            </li>
+          ))
+        ) : (
+          <li>No hay movimientos</li>
+        )}
       </ul>
     </div>
   );

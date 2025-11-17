@@ -1,30 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './transferir.css';
 
+interface Contacto {
+  alias: string;
+}
+
 const Transferir = () => {
   const [input, setInput] = useState('');
+  const [ultimosContactos, setUltimosContactos] = useState<Contacto[]>([]);
   const navigate = useNavigate();
 
-  // 🔧 [Simulación] Lista local de contactos.
-  const contactosRecientes = [
-    { nombre: 'Ana López', alias: 'ana.lopez.billetera' },
-    { nombre: 'Martín Gómez', alias: 'martin.g.billetera' },
-    { nombre: 'Carla Fernández', alias: 'carla.fz.billetera' }
-  ];
+  // Cargar últimos contactos desde backend
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-  // 🔧 [Backend] Esta función será reemplazada por una llamada real a la API.
-  const manejarEnvio = () => {
-    // 🔧 [Simulación desactivada] Esto será reemplazado por validación real:
-    // const destino = contactosRecientes.find(c => c.alias === input.trim());
-    // if (destino) {
-    //   navigate(`/transferir/${destino.alias}`);
-    // } else {
-    //   alert('No se encontró el usuario.');
-    // }
+    fetch('http://localhost:3000/historial/historial', {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.historial && Array.isArray(data.historial)) {
+          // Filtramos solo transferencias enviadas y únicos alias
+          const enviados: string[] = [];
+          const contactos: Contacto[] = [];
 
-    // ✅ Mientras tanto: ruta directa
-    navigate('/transferirdestino');
+          data.historial.forEach((mov: any) => {
+            if (mov.tipo === 'enviada' && !enviados.includes(mov.receptor.alias)) {
+              enviados.push(mov.receptor.alias);
+              contactos.push({ alias: mov.receptor.alias });
+            }
+          });
+
+          setUltimosContactos(contactos.slice(0, 5));
+        }
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  const manejarEnvio = (aliasDestino?: string) => {
+    const miAlias = localStorage.getItem('alias') || '';
+    const destino = aliasDestino || input.trim();
+
+    if (!destino) {
+      alert('Por favor ingresá un alias.');
+      return;
+    } else if (destino === miAlias) {
+      alert('No podés transferirte a vos mismo.');
+      return;
+    }
+
+    navigate('/transferirdestino', { state: { alias: destino } });
   };
 
   return (
@@ -37,33 +65,33 @@ const Transferir = () => {
 
       <input
         type="text"
-        placeholder="Alias, CVU, celular o nombre"
+        placeholder="Alias"
         className="barra-busqueda"
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') manejarEnvio();
-        }}
+        onKeyDown={(e) => { if (e.key === 'Enter') manejarEnvio(); }}
       />
 
-      <button className="enviar-btn" onClick={manejarEnvio}>
-        Continuar
-      </button>
+      <button className="enviar-btn" onClick={() => manejarEnvio()}>Continuar</button>
 
-      <div className="recientes-section">
-        <h3 className="recientes-subtitulo">Recientes</h3>
-        <ul className="lista-contactos">
-          {contactosRecientes.map((contacto, index) => (
-            <li key={index} className="contacto-item">
-              {/* 🔧 [Futuro] Reemplazar por ruta dinámica: `/transferir/${contacto.alias}` */}
-              <Link to="/transferirdestino" className="contacto-link">
-                <span className="nombre-contacto">{contacto.nombre}</span>
-                <span className="alias-contacto">@{contacto.alias}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {/* Últimos contactos */}
+      {ultimosContactos.length > 0 && (
+        <div className="recientes-section">
+          <h3 className="recientes-subtitulo">Últimos contactos</h3>
+          <ul className="lista-contactos">
+            {ultimosContactos.map((contacto, index) => (
+              <li key={index} className="contacto-item">
+                <span
+                  className="chip"
+                  onClick={() => manejarEnvio(contacto.alias)}
+                >
+                  @{contacto.alias}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

@@ -13,6 +13,10 @@ import Configuracion from './configuracion';
 import Contrasena from './contrasena';
 import Cerrarsesion from './cerrarsesion';
 import Notificaciones from './notificaciones';
+import Login from './login';
+import Registro from './registro';
+import ProtectedRoute from './ProtectedRoute';
+
 
 
 
@@ -26,19 +30,20 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Inicio />} />
-        <Route path="/ingresar" element={<Ingresar />} />
-        <Route path="/transferir" element={<Transferir />} />
-        <Route path="/sacar" element={<Sacar />} />
-        <Route path="/tucvu" element={<Tucvu />} />
-        <Route path="/vertodo" element={< Vertodo />} />
-        <Route path="/opciones" element={<Opciones />} />
-        <Route path="/transferirdestino" element={<TransferirDestino />} />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/configuracion" element={<Configuracion />} />
-        <Route path="/contrasena" element={<Contrasena />} />
-        <Route path="/cerrarsesion" element={<Cerrarsesion />} />
-        <Route path="/notificaciones" element={<Notificaciones />} />
-
+         <Route path="/ingresar" element={<ProtectedRoute><Ingresar /></ProtectedRoute>} />
+        <Route path="/transferir" element={<ProtectedRoute><Transferir /></ProtectedRoute>} />
+        <Route path="/sacar" element={<ProtectedRoute><Sacar /></ProtectedRoute>} />
+        <Route path="/tucvu" element={<ProtectedRoute><Tucvu /></ProtectedRoute>} />
+        <Route path="/vertodo" element={<ProtectedRoute><Vertodo /></ProtectedRoute>} />
+        <Route path="/opciones" element={<ProtectedRoute><Opciones /></ProtectedRoute>} />
+        <Route path="/transferirdestino" element={<ProtectedRoute><TransferirDestino /></ProtectedRoute>} />
+        <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
+        <Route path="/configuracion" element={<ProtectedRoute><Configuracion /></ProtectedRoute>} />
+        <Route path="/contrasena" element={<ProtectedRoute><Contrasena /></ProtectedRoute>} />
+        <Route path="/cerrarsesion" element={<ProtectedRoute><Cerrarsesion /></ProtectedRoute>} />
+        <Route path="/notificaciones" element={<ProtectedRoute><Notificaciones /></ProtectedRoute>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
 
       </Routes>
     </Router>

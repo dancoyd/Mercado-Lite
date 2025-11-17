@@ -1,3 +1,4 @@
+/* Contenedor principal */
 .perfil-container {
   position: relative;
   padding: 2rem;
@@ -8,6 +9,7 @@
   width: 100%;
 }
 
+/* Botón de volver */
 .volver-wrapper {
   position: absolute;
   top: 1rem;
@@ -28,6 +30,7 @@
   background-color: #eaf3ff;
 }
 
+/* Título perfil */
 .perfil-titulo {
   font-size: 1.8rem;
   font-weight: bold;
@@ -37,6 +40,7 @@
   text-align: center;
 }
 
+/* Avatar */
 .perfil-avatar-wrapper {
   display: flex;
   flex-direction: column;
@@ -56,6 +60,7 @@
   margin-top: 0.5rem;
 }
 
+/* Botón editar */
 .editar-btn {
   background-color: #2f80ed;
   color: white;
@@ -76,13 +81,14 @@
   background-color: #1c66c5;
 }
 
+/* Datos del perfil */
 .perfil-datos {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  padding: 0;               /* 🔄 Remueve el padding lateral innecesario */
-  width: 100%;              /* ✅ Ocupa todo el ancho del contenedor */
-  box-sizing: border-box;   /* 🔒 Evita que el padding rompa el ancho */
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .perfil-dato label {
@@ -92,20 +98,22 @@
   display: block;
 }
 
+/* Inputs y spans más gorditos */
 .perfil-dato input,
 .perfil-dato span {
   font-size: 1rem;
   padding: 0.75rem 1rem;
+  min-height: 3rem; /* altura más “gordita” */
   width: 100%;
   border-radius: 8px;
   border: 1px solid #ccc;
   background-color: #fff;
   box-sizing: border-box;
-  text-align: center;
-  display: inline-block;
+  display: block;
+  text-align: left;
 }
 
-/* 🔧 Ajustes para móviles */
+/* Ajustes móviles */
 @media (max-width: 480px) {
   .perfil-container {
     padding: 1.5rem 1rem;
@@ -128,6 +136,7 @@
   .perfil-dato input,
   .perfil-dato span {
     font-size: 0.95rem;
-    padding: 0.6rem;
+    padding: 0.6rem 0.8rem;
+    min-height: 2.8rem; /* altura móvil */
   }
 }
