@@ -24,6 +24,7 @@ const TransferirDestino = () => {
 
     if (!monto || Number(monto) <= 0) {
       alert('Por favor, ingresá un monto válido.');
+      setMonto('');
       return;
     }
 
@@ -42,7 +43,14 @@ const TransferirDestino = () => {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Error al transferir');
+
+      if (!res.ok) {
+        alert(`❌ ${data.error || 'Error al transferir'}`);
+        if (data.error?.toLowerCase().includes('no existe')) {
+          navigate('/transferir');
+        }
+        return;
+      }
 
       const stored = localStorage.getItem('ultimas_transferencias');
       let ultimos = stored ? JSON.parse(stored) : [];
@@ -55,6 +63,7 @@ const TransferirDestino = () => {
       navigate('/');
     } catch (err: any) {
       alert(`❌ ${err.message}`);
+      navigate('/transferir');
     }
   };
 
