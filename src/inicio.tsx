@@ -73,7 +73,7 @@ const Inicio = () => {
 
     const intervalo = setInterval(() => {
       fetchDatosUsuario();
-    }, 2000);
+    }, 3000);
 
     return () => clearInterval(intervalo);
 
