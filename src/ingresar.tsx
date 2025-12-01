@@ -7,17 +7,17 @@ const Ingresar = () => {
   const [cargando, setCargando] = useState(false);
   const navigate = useNavigate();
 
-  const usuarioAlias = localStorage.getItem('alias');
-
   const manejarConfirmar = async () => {
     if (monto === '' || monto <= 0) {
-      alert('Ingresá un monto válido mayor a 0');
+      alert('Debe elegir un monto válido mayor a 0');
+      setMonto(''); 
       return;
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
       alert('No estás logueado');
+      setMonto(''); 
       return;
     }
 
@@ -40,10 +40,12 @@ const Ingresar = () => {
       }
 
       alert(`Se agregaron $${Number(monto).toLocaleString()} a tu cuenta`);
+      setMonto(''); 
       navigate('/'); // volver al inicio
     } catch (err) {
       console.error(err);
       alert('Error ingresando dinero');
+      setMonto(''); 
     } finally {
       setCargando(false);
     }
@@ -88,7 +90,7 @@ const Ingresar = () => {
 
         <button
           onClick={manejarConfirmar}
-          disabled={cargando || monto === ''}
+          disabled={cargando}
           style={{
             padding: '1rem 2rem',
             borderRadius: '12px',
