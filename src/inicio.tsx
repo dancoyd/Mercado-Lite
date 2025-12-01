@@ -33,10 +33,9 @@ const Inicio = () => {
         });
 
         if (!resSaldo.ok) throw new Error('Error al obtener datos del usuario');
-
         const dataSaldo = await resSaldo.json();
         setUsuario({ nombre: dataSaldo.nombre });
-        setSaldo(Number(dataSaldo.saldo)); // forzar a número
+        setSaldo(Number(dataSaldo.saldo));
 
         // Obtener historial de transferencias
         const resHist = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
@@ -48,7 +47,6 @@ const Inicio = () => {
         });
 
         if (!resHist.ok) throw new Error('Error al obtener historial');
-
         const dataHist = await resHist.json();
 
         // Tomar las últimas 5 transferencias y mapear a texto
@@ -64,7 +62,6 @@ const Inicio = () => {
           });
 
         setMovimientos(ultimas5);
-
       } catch (err) {
         console.error(err);
       } finally {
@@ -73,6 +70,13 @@ const Inicio = () => {
     };
 
     fetchDatosUsuario();
+
+    const intervalo = setInterval(() => {
+      fetchDatosUsuario();
+    }, 2000);
+
+    return () => clearInterval(intervalo);
+
   }, []);
 
   if (cargando) return <div>Cargando...</div>;
