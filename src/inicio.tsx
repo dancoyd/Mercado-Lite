@@ -13,6 +13,46 @@ const Inicio = () => {
   const [usuario, setUsuario] = useState<Usuario | null>(null);
   const [cargando, setCargando] = useState(true);
 
+  const fetchDatosUsuario = async (token: string) => {
+    try {
+      // Obtener saldo
+      const resSaldo = await fetch('https://mercadolite-api.vercel.app/user/saldo', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!resSaldo.ok) throw new Error('Error al obtener datos del usuario');
+      const dataSaldo = await resSaldo.json();
+      setUsuario({ nombre: dataSaldo.nombre });
+      setSaldo(Number(dataSaldo.saldo));
+
+      // Obtener historial
+      const resHist = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!resHist.ok) throw new Error('Error al obtener historial');
+      const dataHist = await resHist.json();
+
+      const ultimas5 = dataHist.historial
+        .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
+        .slice(0, 5)
+        .map((h: any) => h.tipo === 'enviada' ? `Transferencia hecha a "${h.receptor.alias}"` : `Transferencia recibida de "${h.emisor.alias}"`);
+
+      setMovimientos(ultimas5);
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setCargando(false);
+    }
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -20,58 +60,14 @@ const Inicio = () => {
       return;
     }
 
-    const fetchDatosUsuario = async () => {
-      try {
-        // Obtener saldo y datos del usuario
-        const resSaldo = await fetch('https://mercadolite-api.vercel.app/user/saldo', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
+    fetchDatosUsuario(token);
 
-        if (!resSaldo.ok) throw new Error('Error al obtener datos del usuario');
+    const intervalId = setInterval(() => {
+      fetchDatosUsuario(token);
+    }, 3000);
 
-        const dataSaldo = await resSaldo.json();
-        setUsuario({ nombre: dataSaldo.nombre });
-        setSaldo(Number(dataSaldo.saldo)); // forzar a número
+    return () => clearInterval(intervalId);
 
-        // Obtener historial de transferencias
-        const resHist = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (!resHist.ok) throw new Error('Error al obtener historial');
-
-        const dataHist = await resHist.json();
-
-        // Tomar las últimas 5 transferencias y mapear a texto
-        const ultimas5 = dataHist.historial
-          .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
-          .slice(0, 5)
-          .map((h: any) => {
-            if (h.tipo === 'enviada') {
-              return `Transferencia hecha a "${h.receptor.alias}"`;
-            } else {
-              return `Transferencia recibida de "${h.emisor.alias}"`;
-            }
-          });
-
-        setMovimientos(ultimas5);
-
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setCargando(false);
-      }
-    };
-
-    fetchDatosUsuario();
   }, []);
 
   if (cargando) return <div>Cargando...</div>;
@@ -88,16 +84,11 @@ const Inicio = () => {
             <div className="menu-container">
               <h1>MercadoLite</h1>
               <p>Bienvenido a tu plataforma de transferencias segura y rápida.</p>
-              <Link to="/login" className="accion-btn iniciar-sesion">
-                Iniciar sesión
-              </Link>
-              <Link to="/registro" className="accion-btn registrarse">
-                Registrarse
-              </Link>
+              <Link to="/login" className="accion-btn iniciar-sesion">Iniciar sesión</Link>
+              <Link to="/registro" className="accion-btn registrarse">Registrarse</Link>
             </div>
           </div>
         )}
-
         {usuario && <Link to="/opciones" className="menu-btn">☰ Menú</Link>}
       </header>
 
@@ -134,8 +125,7 @@ const Inicio = () => {
             <ul>
               {movimientos.length > 0
                 ? movimientos.map((item, index) => <li key={index}>{item}</li>)
-                : <li>No hay movimientos</li>
-              }
+                : <li>No hay movimientos</li>}
             </ul>
           </section>
         </>
