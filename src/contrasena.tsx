@@ -1,20 +1,74 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './contrasena.css';
 
 const Contrasena = () => {
   const [actual, setActual] = useState('');
   const [nueva, setNueva] = useState('');
   const [confirmacion, setConfirmacion] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = () => {
+  const limpiarTodo = () => {
+    setActual('');
+    setNueva('');
+    setConfirmacion('');
+  };
+
+  const handleSubmit = async () => {
     if (!actual || !nueva || !confirmacion) {
       alert('Por favor completá todos los campos.');
-    } else if (nueva !== confirmacion) {
-      alert('Las contraseñas nuevas no coinciden.');
-    } else {
-      alert('✅ Contraseña actualizada (simulado).');
-      // 🔧 Aquí podrías hacer la llamada real a tu backend.
+      limpiarTodo();
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('No hay sesión activa. Iniciá sesión nuevamente.');
+      limpiarTodo();
+      navigate('/');
+      return;
+    }
+
+    try {
+      if (nueva === actual) {
+        alert('La nueva contraseña no puede ser igual a la anterior.');
+        limpiarTodo();
+        return;
+      }
+
+      if (nueva !== confirmacion) {
+        alert('Las contraseñas nuevas no coinciden.');
+        limpiarTodo();
+        return;
+      }
+
+      const respuesta = await fetch('https://mercadolite-api.vercel.app/user/cambiar-contrasena', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          contraseñaActual: actual,
+          contraseñaNueva: nueva
+        })
+      });
+
+      const data = await respuesta.json();
+
+      if (!respuesta.ok) {
+        alert(data.error || 'Contraseña actual incorrecta.');
+        limpiarTodo();
+        return;
+      }
+
+      alert('Contraseña cambiada correctamente 🎉');
+      limpiarTodo();
+      navigate('/configuracion');
+      
+    } catch (error) {
+      alert('Error en el servidor. Intentá de nuevo más tarde.');
+      limpiarTodo();
     }
   };
 

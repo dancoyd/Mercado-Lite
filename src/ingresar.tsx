@@ -24,16 +24,13 @@ const Ingresar = () => {
     setCargando(true);
 
     try {
-      const res = await fetch('https://mercadolite-api.vercel.app/user/transferir', {
+      const res = await fetch('https://mercadolite-api.vercel.app/user/ingresar', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          aliasDestino: usuarioAlias, // ⚡ corregido para coincidir con el controller
-          monto: monto,
-        }),
+        body: JSON.stringify({ monto }),
       });
 
       const data = await res.json();
