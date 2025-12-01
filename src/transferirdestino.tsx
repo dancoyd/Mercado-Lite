@@ -46,6 +46,7 @@ const TransferirDestino = () => {
 
       if (!res.ok) {
         alert(`❌ ${data.error || 'Error al transferir'}`);
+        setMonto('');
         if (data.error?.toLowerCase().includes('no existe')) {
           navigate('/transferir');
         }

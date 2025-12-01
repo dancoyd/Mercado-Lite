@@ -36,7 +36,7 @@ const Inicio = () => {
 
         const dataSaldo = await resSaldo.json();
         setUsuario({ nombre: dataSaldo.nombre });
-        setSaldo(dataSaldo.saldo);
+        setSaldo(Number(dataSaldo.saldo)); // forzar a número
 
         // Obtener historial de transferencias
         const resHist = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
@@ -106,7 +106,11 @@ const Inicio = () => {
         <>
           <section className="saldo-section">
             <p>Saldo disponible</p>
-            <h1>{saldo !== null ? `$${saldo.toLocaleString()}` : 'Cargando...'}</h1>
+            <h1>
+              {saldo !== null
+                ? `$${Number(saldo).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                : 'Cargando...'}
+            </h1>
           </section>
 
           <section className="acciones-footer">
