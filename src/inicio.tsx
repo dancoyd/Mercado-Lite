@@ -15,65 +15,59 @@ const Inicio = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-
     if (!token) {
       setCargando(false);
       return;
     }
 
-    const fetchDatosUsuario = async () => {
+    const fetchSaldo = async () => {
       try {
-        // Obtener saldo y datos del usuario
-        const resSaldo = await fetch('https://mercadolite-api.vercel.app/user/saldo', {
-          method: 'GET',
+        const res = await fetch('https://mercadolite-api.vercel.app/user/saldo', {
           headers: { 
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json', 
             'Authorization': `Bearer ${token}` 
           }
         });
-
-        if (!resSaldo.ok) throw new Error('Error al obtener datos del usuario');
-        const dataSaldo = await resSaldo.json();
-        setUsuario({ nombre: dataSaldo.nombre });
-        setSaldo(Number(dataSaldo.saldo));
-
-        // Obtener historial de transferencias
-        const resHist = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
-        });
-
-        if (!resHist.ok) throw new Error('Error al obtener historial');
-        const dataHist = await resHist.json();
-
-        // Tomar las últimas 5 transferencias y mapear a texto
-        const ultimas5 = dataHist.historial
-          .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
-          .slice(0, 5)
-          .map((h: any) => {
-            if (h.tipo === 'enviada') {
-              return `Transferencia hecha a "${h.receptor.alias}"`;
-            } else {
-              return `Transferencia recibida de "${h.emisor.alias}"`;
-            }
-          });
-
-        setMovimientos(ultimas5);
+        if (!res.ok) throw new Error('Error al obtener saldo');
+        const data = await res.json();
+        setSaldo(Number(data.saldo));
+        setUsuario({ nombre: data.nombre });
       } catch (err) {
         console.error(err);
-      } finally {
-        setCargando(false);
       }
     };
 
-    fetchDatosUsuario();
+    const fetchMovimientos = async () => {
+      try {
+        const res = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
+          headers: { 
+            'Content-Type': 'application/json', 
+            'Authorization': `Bearer ${token}` 
+          }
+        });
+        if (!res.ok) throw new Error('Error al obtener historial');
+        const data = await res.json();
+        const ultimas5 = data.historial
+          .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
+          .slice(0, 5)
+          .map((h: any) =>
+            h.tipo === 'enviada' 
+              ? `Transferencia hecha a "${h.receptor.alias}"`
+              : `Transferencia recibida de "${h.emisor.alias}"`
+          );
+        setMovimientos(ultimas5);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchSaldo();
+    fetchMovimientos();
 
     const intervalo = setInterval(() => {
-      fetchDatosUsuario();
-    }, 3000);
+      fetchSaldo();
+      fetchMovimientos();
+    }, 4000);
 
     return () => clearInterval(intervalo);
 
