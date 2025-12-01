@@ -20,57 +20,58 @@ const Inicio = () => {
       return;
     }
 
-    const fetchSaldo = async () => {
+    const fetchDatosUsuario = async () => {
       try {
-        const res = await fetch('https://mercadolite-api.vercel.app/user/saldo', {
-          headers: { 
-            'Content-Type': 'application/json', 
-            'Authorization': `Bearer ${token}` 
+        // Obtener saldo y datos del usuario
+        const resSaldo = await fetch('https://mercadolite-api.vercel.app/user/saldo', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           }
         });
-        if (!res.ok) throw new Error('Error al obtener saldo');
-        const data = await res.json();
-        setSaldo(Number(data.saldo));
-        setUsuario({ nombre: data.nombre });
-      } catch (err) {
-        console.error(err);
-      }
-    };
 
-    const fetchMovimientos = async () => {
-      try {
-        const res = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
-          headers: { 
-            'Content-Type': 'application/json', 
-            'Authorization': `Bearer ${token}` 
+        if (!resSaldo.ok) throw new Error('Error al obtener datos del usuario');
+
+        const dataSaldo = await resSaldo.json();
+        setUsuario({ nombre: dataSaldo.nombre });
+        setSaldo(Number(dataSaldo.saldo)); // forzar a número
+
+        // Obtener historial de transferencias
+        const resHist = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           }
         });
-        if (!res.ok) throw new Error('Error al obtener historial');
-        const data = await res.json();
-        const ultimas5 = data.historial
+
+        if (!resHist.ok) throw new Error('Error al obtener historial');
+
+        const dataHist = await resHist.json();
+
+        // Tomar las últimas 5 transferencias y mapear a texto
+        const ultimas5 = dataHist.historial
           .sort((a: any, b: any) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime())
           .slice(0, 5)
-          .map((h: any) =>
-            h.tipo === 'enviada' 
-              ? `Transferencia hecha a "${h.receptor.alias}"`
-              : `Transferencia recibida de "${h.emisor.alias}"`
-          );
+          .map((h: any) => {
+            if (h.tipo === 'enviada') {
+              return `Transferencia hecha a "${h.receptor.alias}"`;
+            } else {
+              return `Transferencia recibida de "${h.emisor.alias}"`;
+            }
+          });
+
         setMovimientos(ultimas5);
+
       } catch (err) {
         console.error(err);
+      } finally {
+        setCargando(false);
       }
     };
 
-    fetchSaldo();
-    fetchMovimientos();
-
-    const intervalo = setInterval(() => {
-      fetchSaldo();
-      fetchMovimientos();
-    }, 4000);
-
-    return () => clearInterval(intervalo);
-
+    fetchDatosUsuario();
   }, []);
 
   if (cargando) return <div>Cargando...</div>;
@@ -113,16 +114,13 @@ const Inicio = () => {
 
           <section className="acciones-footer">
             <Link to="/ingresar" className="accion-btn ingresar">
-              <FaArrowDown style={{ marginRight: '0.5rem' }} />
-              Ingresar
+              <FaArrowDown style={{ marginRight: '0.5rem' }} /> Ingresar
             </Link>
             <Link to="/transferir" className="accion-btn transferir">
-              <FaExchangeAlt style={{ marginRight: '0.5rem' }} />
-              Transferir
+              <FaExchangeAlt style={{ marginRight: '0.5rem' }} /> Transferir
             </Link>
             <Link to="/tucvu" className="accion-btn cvu">
-              <FaCreditCard style={{ marginRight: '0.5rem' }} />
-              Tu CVU
+              <FaCreditCard style={{ marginRight: '0.5rem' }} /> Tu CVU
             </Link>
           </section>
 
@@ -130,16 +128,14 @@ const Inicio = () => {
             <div className="mov-header">
               <h3>Últimos movimientos</h3>
               <Link to="/vertodo" className="ver-todos">
-                <FaEye style={{ marginRight: '0.5rem' }} />
-                Ver todos
+                <FaEye style={{ marginRight: '0.5rem' }} /> Ver todos
               </Link>
             </div>
             <ul>
-              {movimientos.length > 0 ? (
-                movimientos.map((item, index) => <li key={index}>{item}</li>)
-              ) : (
-                <li>No hay movimientos</li>
-              )}
+              {movimientos.length > 0
+                ? movimientos.map((item, index) => <li key={index}>{item}</li>)
+                : <li>No hay movimientos</li>
+              }
             </ul>
           </section>
         </>
