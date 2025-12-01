@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './perfil.css';
 
+import defaultAvatar from '../src/assets/avatar-default.png';
+
 const Perfil = () => {
   const [nombreCompleto, setNombreCompleto] = useState('');
   const [email, setEmail] = useState('');
-  const [avatar, setAvatar] = useState<string | null>(null);
+  const [avatar, setAvatar] = useState<string>(defaultAvatar);
   const [modoEdicion, setModoEdicion] = useState(false);
 
   useEffect(() => {
@@ -63,7 +65,7 @@ const Perfil = () => {
 
       <div className="perfil-avatar-wrapper">
         <img
-          src={avatar || 'https://via.placeholder.com/120'}
+          src={avatar}
           alt="Foto de perfil"
           className="perfil-avatar"
         />
