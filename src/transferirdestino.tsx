@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './transferirdestino.css';
 
 const TransferirDestino = () => {
@@ -10,20 +12,20 @@ const TransferirDestino = () => {
 
   useEffect(() => {
     if (!alias) {
-      alert('No se recibió un alias válido. Volvé a intentar.');
+      toast.error('❌ No se recibió un alias válido. Volvé a intentar.');
       navigate('/transferir');
     }
   }, [alias, navigate]);
 
   const manejarConfirmacion = async () => {
     if (!alias) {
-      alert('No se recibió un alias válido. Volvé a intentar.');
+      toast.error('❌ No se recibió un alias válido. Volvé a intentar.');
       navigate('/transferir');
       return;
     }
 
     if (!monto || Number(monto) <= 0) {
-      alert('Por favor, ingresá un monto válido.');
+      toast.warning('⚠️ Por favor, ingresá un monto válido.');
       setMonto('');
       return;
     }
@@ -45,7 +47,7 @@ const TransferirDestino = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        alert(`❌ ${data.error || 'Error al transferir'}`);
+        toast.error(`❌ ${data.error || 'Error al transferir'}`);
         setMonto('');
         if (data.error?.toLowerCase().includes('no existe')) {
           navigate('/transferir');
@@ -60,10 +62,10 @@ const TransferirDestino = () => {
       ultimos = ultimos.slice(0, 5);
       localStorage.setItem('ultimas_transferencias', JSON.stringify(ultimos));
 
-      alert(`✅ Transferencia de $${monto} a ${alias} realizada con éxito`);
+      toast.success(`✅ Transferencia de $${monto} a ${alias} realizada con éxito 🎉`);
       navigate('/');
     } catch (err: any) {
-      alert(`❌ ${err.message}`);
+      toast.error(`❌ ${err.message}`);
       navigate('/transferir');
     }
   };
@@ -93,6 +95,9 @@ const TransferirDestino = () => {
       <button className="enviar-btn" onClick={manejarConfirmacion}>
         Confirmar y transferir
       </button>
+
+      {/* Contenedor de notificaciones */}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };

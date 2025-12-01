@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './contrasena.css';
 
 const Contrasena = () => {
@@ -16,14 +18,14 @@ const Contrasena = () => {
 
   const handleSubmit = async () => {
     if (!actual || !nueva || !confirmacion) {
-      alert('Por favor completá todos los campos.');
+      toast.warning('⚠️ Por favor completá todos los campos.');
       limpiarTodo();
       return;
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('No hay sesión activa. Iniciá sesión nuevamente.');
+      toast.error('❌ No hay sesión activa. Iniciá sesión nuevamente.');
       limpiarTodo();
       navigate('/');
       return;
@@ -31,13 +33,13 @@ const Contrasena = () => {
 
     try {
       if (nueva === actual) {
-        alert('La nueva contraseña no puede ser igual a la anterior.');
+        toast.error('❌ La nueva contraseña no puede ser igual a la anterior.');
         limpiarTodo();
         return;
       }
 
       if (nueva !== confirmacion) {
-        alert('Las contraseñas nuevas no coinciden.');
+        toast.error('❌ Las contraseñas nuevas no coinciden.');
         limpiarTodo();
         return;
       }
@@ -57,17 +59,17 @@ const Contrasena = () => {
       const data = await respuesta.json();
 
       if (!respuesta.ok) {
-        alert(data.error || 'Contraseña actual incorrecta.');
+        toast.error(`❌ ${data.error || 'Contraseña actual incorrecta.'}`);
         limpiarTodo();
         return;
       }
 
-      alert('Contraseña cambiada correctamente 🎉');
+      toast.success('✅ Contraseña cambiada correctamente 🎉');
       limpiarTodo();
       navigate('/configuracion');
-      
+
     } catch (error) {
-      alert('Error en el servidor. Intentá de nuevo más tarde.');
+      toast.error('❌ Error en el servidor. Intentá de nuevo más tarde.');
       limpiarTodo();
     }
   };
@@ -109,6 +111,9 @@ const Contrasena = () => {
           Guardar cambios
         </button>
       </div>
+
+      {/* Contenedor de notificaciones */}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };

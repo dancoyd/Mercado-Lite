@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './transferir.css';
 
 interface Contacto {
@@ -45,10 +47,10 @@ const Transferir = () => {
     const destino = aliasDestino || input.trim();
 
     if (!destino) {
-      alert('Por favor ingresá un alias.');
+      toast.warning('⚠️ Por favor ingresá un alias.');
       return;
     } else if (destino === miAlias) {
-      alert('No podés transferirte a vos mismo.');
+      toast.error('❌ No podés transferirte a vos mismo.');
       return;
     }
 
@@ -92,6 +94,9 @@ const Transferir = () => {
           </ul>
         </div>
       )}
+
+      {/* Contenedor de notificaciones */}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './ingresar.css';
 
 const Ingresar = () => {
@@ -9,15 +11,15 @@ const Ingresar = () => {
 
   const manejarConfirmar = async () => {
     if (monto === '' || monto <= 0) {
-      alert('Debe elegir un monto válido mayor a 0');
-      setMonto(''); 
+      toast.warning('⚠️ Debe elegir un monto válido mayor a 0');
+      setMonto('');
       return;
     }
 
     const token = localStorage.getItem('token');
     if (!token) {
-      alert('No estás logueado');
-      setMonto(''); 
+      toast.error('❌ No estás logueado');
+      setMonto('');
       return;
     }
 
@@ -39,13 +41,13 @@ const Ingresar = () => {
         throw new Error(data.error || 'Error al ingresar dinero');
       }
 
-      alert(`Se agregaron $${Number(monto).toLocaleString()} a tu cuenta`);
-      setMonto(''); 
+      toast.success(`✅ Se agregaron $${Number(monto).toLocaleString()} a tu cuenta 🎉`);
+      setMonto('');
       navigate('/'); // volver al inicio
     } catch (err) {
       console.error(err);
-      alert('Error ingresando dinero');
-      setMonto(''); 
+      toast.error('❌ Error ingresando dinero');
+      setMonto('');
     } finally {
       setCargando(false);
     }
@@ -64,13 +66,16 @@ const Ingresar = () => {
 
       <h2 className="ingresar-titulo">Ingresar dinero</h2>
 
-      <div className="ingresar-form" style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        gap: '1.5rem',
-        marginTop: '3rem'
-      }}>
+      <div
+        className="ingresar-form"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '1.5rem',
+          marginTop: '3rem',
+        }}
+      >
         <input
           type="number"
           min={1}
@@ -84,7 +89,7 @@ const Ingresar = () => {
             border: '1px solid #dcdcdc',
             width: '250px',
             fontSize: '1.2rem',
-            textAlign: 'center'
+            textAlign: 'center',
           }}
         />
 
@@ -100,12 +105,15 @@ const Ingresar = () => {
             fontSize: '1.2rem',
             fontWeight: 'bold',
             cursor: cargando ? 'not-allowed' : 'pointer',
-            width: '200px'
+            width: '200px',
           }}
         >
           {cargando ? 'Procesando...' : 'Confirmar'}
         </button>
       </div>
+
+      {/* Contenedor de notificaciones */}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };

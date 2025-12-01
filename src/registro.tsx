@@ -1,7 +1,8 @@
 // src/pages/Registro.tsx
-
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './registro.css';
 
 const Registro = () => {
@@ -9,17 +10,13 @@ const Registro = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
   const handleRegistro = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setSuccess('');
 
     if (password !== confirmPassword) {
-      setError('Las contraseñas no coinciden');
+      toast.error('❌ Las contraseñas no coinciden');
       return;
     }
 
@@ -31,22 +28,22 @@ const Registro = () => {
           nombre,
           email,
           alias: email.split('@')[0], // Genera un alias automático
-          contraseña: password,       // Cambiado a "contraseña" para el backend
+          contraseña: password,       // Backend espera "contraseña"
         }),
       });
 
       const data = await res.json();
 
       if (res.ok) {
-        setSuccess('Registro exitoso! Redirigiendo a login...');
+        toast.success('✅ Registro exitoso! Redirigiendo a login...');
         setTimeout(() => {
           navigate('/login');
         }, 1500);
       } else {
-        setError(data.error || 'Error al registrarse');
+        toast.error(`❌ ${data.error || 'Error al registrarse'}`);
       }
     } catch (err) {
-      setError('Error de conexión');
+      toast.error('❌ Error de conexión con el servidor');
     }
   };
 
@@ -54,9 +51,6 @@ const Registro = () => {
     <div className="registro-container">
       <div className="registro-box">
         <h2>Registro</h2>
-
-        {error && <div className="registro-error">{error}</div>}
-        {success && <div className="registro-success">{success}</div>}
 
         <form onSubmit={handleRegistro}>
           <input
@@ -96,6 +90,9 @@ const Registro = () => {
           <p>¿Ya tenés cuenta? <Link to="/login">Iniciar sesión</Link></p>
         </div>
       </div>
+
+      {/* Contenedor de notificaciones */}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };

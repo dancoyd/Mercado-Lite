@@ -1,17 +1,17 @@
 // src/pages/login.tsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [contraseña, setContraseña] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
 
     try {
       const res = await fetch('https://mercadolite-api.vercel.app/user/login', {
@@ -24,12 +24,13 @@ const Login = () => {
 
       if (res.ok) {
         localStorage.setItem('token', data.token);
+        toast.success('✅ Sesión iniciada correctamente 🎉');
         navigate('/');
       } else {
-        setError(data.error || 'Usuario o contraseña incorrectos');
+        toast.error(`❌ ${data.error || 'Usuario o contraseña incorrectos'}`);
       }
     } catch (err) {
-      setError('Error de conexión con el servidor');
+      toast.error('❌ Error de conexión con el servidor');
     }
   };
 
@@ -37,8 +38,6 @@ const Login = () => {
     <div className="login-container">
       <div className="login-box">
         <h2>Iniciar Sesión</h2>
-
-        {error && <div className="login-error">{error}</div>}
 
         <form onSubmit={handleLogin}>
           <input
@@ -62,6 +61,9 @@ const Login = () => {
           <p>¿No tenés cuenta? <Link to="/registro">Registrarse</Link></p>
         </div>
       </div>
+
+      {/* Contenedor de notificaciones */}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };
