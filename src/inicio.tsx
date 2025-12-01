@@ -85,51 +85,17 @@ const Inicio = () => {
             <span className="nombre">{usuario.nombre}</span>
           </div>
         ) : (
-          <div
-            className="no-session-menu"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-start', 
-              alignItems: 'center',
-              height: '70vh',
-              gap: '2rem',
-              marginTop: '15vh', 
-              width: '100%'
-            }}
-          >
-            <Link
-              to="/login"
-              className="accion-btn iniciar-sesion"
-              style={{
-                padding: '0.5rem 4rem', 
-                fontSize: '2rem',
-                width: '300px',
-                textAlign: 'center',
-                borderRadius: '12px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              Iniciar sesión
-            </Link>
-            <Link
-              to="/registro"
-              className="accion-btn registrarse"
-              style={{
-                padding: '0.5rem 4rem',
-                fontSize: '2rem',
-                width: '300px',
-                textAlign: 'center',
-                borderRadius: '12px',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center'
-              }}
-            >
-              Registrarse
-            </Link>
+          <div className="no-session-menu">
+            <div className="menu-container">
+              <h1>MercadoLite</h1>
+              <p>Bienvenido a tu plataforma de transferencias segura y rápida.</p>
+              <Link to="/login" className="accion-btn iniciar-sesion">
+                Iniciar sesión
+              </Link>
+              <Link to="/registro" className="accion-btn registrarse">
+                Registrarse
+              </Link>
+            </div>
           </div>
         )}
 

@@ -181,3 +181,96 @@
 .menu-btn:hover {
   background-color: #e67e22;
 }
+
+.no-session-menu {
+  display: flex;
+  justify-content: center; /* centrar horizontal */
+  align-items: center;     /* centrar vertical */
+  height: 100vh;           /* ocupar toda la altura de la ventana */
+  width: 100vw;            /* ocupar todo el ancho */
+  background-color: #ffffff; /* fondo blanco */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.no-session-menu .menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: #ffffff; /* tarjeta blanca */
+  padding: 3rem 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  min-width: 250px;
+  box-sizing: border-box;
+}
+
+.no-session-menu .menu-container h1 {
+  font-size: 2rem;
+  color: #3498db; /* celeste corporativo */
+  margin: 0;
+}
+
+.no-session-menu .menu-container p {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+}
+
+.no-session-menu .accion-btn {
+  width: 100%;
+  padding: 0.8rem 0;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.no-session-menu .accion-btn.iniciar-sesion {
+  background-color: #3498db; /* celeste */
+  color: white;
+}
+
+.no-session-menu .accion-btn.iniciar-sesion:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.no-session-menu .accion-btn.registrarse {
+  background-color: #ffffff; /* blanco */
+  color: #3498db;
+  border: 2px solid #3498db;
+}
+
+.no-session-menu .accion-btn.registrarse:hover {
+  background-color: #e6f2fa;
+  transform: translateY(-2px);
+}
+
+/* Responsive: texto y botones se adaptan en móviles */
+@media (max-width: 500px) {
+  .no-session-menu .menu-container {
+    padding: 2rem 1.5rem;
+  }
+  .no-session-menu .menu-container h1 {
+    font-size: 1.7rem;
+  }
+  .no-session-menu .menu-container p {
+    font-size: 0.95rem;
+  }
+  .no-session-menu .accion-btn {
+    font-size: 1.1rem;
+    padding: 0.7rem 0;
+  }
+}
