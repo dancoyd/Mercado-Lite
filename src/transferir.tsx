@@ -16,7 +16,7 @@ const Transferir = () => {
     const token = localStorage.getItem('token');
     if (!token) return;
 
-    fetch('http://localhost:3000/historial/historial', {
+    fetch('https://mercadolite-api.vercel.app/historial/historial', {
       method: 'GET',
       headers: { Authorization: `Bearer ${token}` },
     })

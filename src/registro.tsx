@@ -24,7 +24,7 @@ const Registro = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:3000/user/registro', {
+      const res = await fetch('https://mercadolite-api.vercel.app/user/registro', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

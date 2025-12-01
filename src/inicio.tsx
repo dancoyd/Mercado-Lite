@@ -24,7 +24,7 @@ const Inicio = () => {
     const fetchDatosUsuario = async () => {
       try {
         // Obtener saldo y datos del usuario
-        const resSaldo = await fetch('http://localhost:3000/user/saldo', {
+        const resSaldo = await fetch('https://mercadolite-api.vercel.app/user/saldo', {
           method: 'GET',
           headers: { 
             'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const Inicio = () => {
         setSaldo(dataSaldo.saldo);
 
         // Obtener historial de transferencias
-        const resHist = await fetch('http://localhost:3000/historial/historial', {
+        const resHist = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

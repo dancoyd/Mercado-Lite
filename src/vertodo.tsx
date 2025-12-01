@@ -22,7 +22,7 @@ const Vertodo = () => {
 
     const fetchHistorial = async () => {
       try {
-        const res = await fetch('http://localhost:3000/historial/historial', {
+        const res = await fetch('https://mercadolite-api.vercel.app/historial/historial', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

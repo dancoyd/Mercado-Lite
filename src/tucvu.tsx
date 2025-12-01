@@ -20,7 +20,7 @@ const Tucvu = () => {
           return;
         }
 
-        const res = await fetch('http://localhost:3000/user/saldo', {
+        const res = await fetch('https://mercadolite-api.vercel.app/user/saldo', {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,

@@ -29,7 +29,7 @@ const TransferirDestino = () => {
 
     const token = localStorage.getItem('token');
     try {
-      const res = await fetch('http://localhost:3000/user/transferir', {
+      const res = await fetch('https://mercadolite-api.vercel.app/user/transferir', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
